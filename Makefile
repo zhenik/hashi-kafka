@@ -16,6 +16,21 @@ nomad:
 		-vault-enabled=true \
 		-vault-address=http://172.17.0.1:8200 \
 		-vault-token=root
+.PHONY: nomad-node-status
+nomad-node-status:
+	nomad node status -address=http://172.17.0.1:4646
+.PHONY: nomad-server-members
+nomad-server-members:
+	nomad server members -address=http://172.17.0.1:4646 -detailed
+.PHONY: nomad-job-run-example
+nomad-job-run-example:
+	nomad job run -address=http://172.17.0.1:4646 example.nomad
+.PHONY: nomad-job-plan-example
+nomad-job-plan-example:
+	nomad job plan -address=http://172.17.0.1:4646 example.nomad
+.PHONY: nomad-status-example
+nomad-status-example:
+	nomad status -address=http://172.17.0.1:4646 example
 
 # -vault-ca-path=root-ca.pem
 
