@@ -4,7 +4,7 @@ services:
   zookeeper1:
     image: confluentinc/cp-zookeeper:5.3.1
     ports:
-      - 12181:12181
+      - "12181:12181"
     network_mode: host
     environment:
       ZOOKEEPER_SERVER_ID: 1
@@ -16,7 +16,7 @@ services:
   zookeeper2:
     image: confluentinc/cp-zookeeper:5.3.1
     ports:
-      - 22181:22181
+      - "22181:22181"
     network_mode: host
     environment:
       ZOOKEEPER_SERVER_ID: 2
@@ -28,7 +28,7 @@ services:
   zookeeper3:
     image: confluentinc/cp-zookeeper:5.3.1
     ports:
-      - 32181:32181
+      - "32181:32181"
     network_mode: host
     environment:
       ZOOKEEPER_SERVER_ID: 3

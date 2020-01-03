@@ -1,0 +1,6 @@
+---
+version: '3'
+services:
+  zookeeper:
+    build: .
+    image: zhenik/zookeeper-nomad:5.3.1
