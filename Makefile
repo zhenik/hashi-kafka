@@ -3,19 +3,19 @@ all:
 
 .PHONY: consul
 consul:
-	sudo consul agent -dev -client=172.17.0.1 -dns-port=53
+#	sudo consul agent -dev -client=172.17.0.1 -dns-port=53
+	sudo consul agent -dev -client=0.0.0.0 -dns-port=53
 
 .PHONY: vault
 vault:	
 	sudo vault server -dev --dev-listen-address=172.17.0.1:8200 -dev-root-token-id=root
+#	sudo vault server -dev --dev-listen-address=0.0.0.0:8200 -dev-root-token-id=root
 
 .PHONY: nomad
 nomad:
-	sudo nomad agent -dev -bind=172.17.0.1 -network-interface=docker0 \
-		-consul-address=172.17.0.1:8500 \
-		-vault-enabled=true \
-		-vault-address=http://172.17.0.1:8200 \
-		-vault-token=root
+	sudo nomad agent -dev -bind=172.17.0.1 -consul-address=http://172.17.0.1:8500 -vault-enabled=true -vault-address=http://172.17.0.1:8200 -vault-token="root" -network-interface=docker0
+#	sudo nomad agent -dev -bind=172.17.0.1 -consul-address=http://172.17.0.1:8500 -vault-enabled=true -vault-address=http://172.17.0.1:8200 -vault-token="root" -network-interface=docker0
+#	sudo nomad agent -dev -bind=172.17.0.1 -consul-address=http://172.17.0.1:8500 -network-interface=docker0
 .PHONY: nomad-node-status
 nomad-node-status:
 	nomad node status -address=http://172.17.0.1:4646

@@ -62,11 +62,7 @@ RUN rm -f consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.tgz
 
 # copy consul template
 RUN mkdir -p /consul-templates
-COPY ./templates/zookeeper-template.ctpl /consul-templates/
-#COPY ./templates/zookeeper-services.ctpl /consul-templates/zookeeper-services.ctpl
-
-WORKDIR $DISTRO_NAME
-VOLUME ["$ZOO_DATA_DIR", "$ZOO_DATA_LOG_DIR", "$ZOO_LOG_DIR"]
+COPY templates/zookeeper-services.ctpl /consul-templates/zookeeper-services.ctpl
 
 EXPOSE 2181 2281 2888 3888 8080
 
@@ -74,5 +70,6 @@ ENV PATH=$PATH:$BIN_DIR:/$DISTRO_NAME/bin \
     ZOOCFGDIR=$ZOO_CONF_DIR
 
 COPY docker-entrypoint.sh /
+RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["zkServer.sh", "start-foreground"]

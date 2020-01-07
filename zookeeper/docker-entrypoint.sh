@@ -6,10 +6,11 @@ set -e
 sleep 20
 
 # create the zookeeper dynamic cfg from consul template
-if [[ -z "{$CONSUL_HTTP_ADDR}" ]]; then
-  consul-template -once -consul-addr=${CONSUL_HTTP_ADDR} -template /consul-templates/zookeeper-services.ctpl:$ZOO_CONF_DIR/zoo.cfg.dynamic
-else
+if [[ -z $CONSUL_HTTP_ADDR ]]
+then
   consul-template -once -template /consul-templates/zookeeper-services.ctpl:$ZOO_CONF_DIR/zoo.cfg.dynamic
+else
+  consul-template -once -consul-addr="$CONSUL_HTTP_ADDR" -template /consul-templates/zookeeper-services.ctpl:"$ZOO_CONF_DIR"/zoo.cfg.dynamic
 fi
 
 # decode the base64 truststore and keystore files
